@@ -1,15 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Raleway:wght@300;400;600&display=swap');
+
 @import "tailwindcss";
 
-@theme {
+/* @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+} */
+ /* For headings and logo */
+h1, h2, h3, .brand-name {
+  font-family: 'Cormorant Garamond', serif;
 }
 
-html,
+/* For body text and navigation */
+body, p, a, .nav-link {
+  font-family: 'Raleway', sans-serif;
+}
+
+/* html,
 body {
   @apply bg-white dark:bg-gray-950;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
-}
+} */
