@@ -17,6 +17,8 @@ import logo from"./main logo.png";
 //  import hero1 from "./hero1.jpg";
  import { useEffect, useState } from "react";
 import HeroCarousel from "./hro";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 
 export const links: Route.LinksFunction = () => [
@@ -42,6 +44,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // animation duration (in ms)
+      once: true,     // whether animation should happen only once
+    });
+  }, []);
 
   return (
     <html lang="en">
@@ -57,7 +65,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         }`}>
               <div className="flex items-center w-full justify-center gap-70 py-1">
                 <div>
-                  <ul className="flex gap-5 uppercase font-bold">
+                  <ul className="flex gap-5 uppercase font-bold text-rose-900">
                     <li>New</li>
                     <li>Perfume</li>
                     <li>Jewelries</li>
@@ -66,7 +74,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <div>
                   <img src={logo} alt="Scentelle Logo" width={180} />
                 </div>
-                <div className="flex gap-4 items-center font-bold">
+                <div className="flex gap-4 items-center font-extrabold text-rose-900">
                   <SearchToggle />
                   <IoPersonOutline size={18} />
                   <BsBag size={18} />

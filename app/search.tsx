@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa'; // Make sure react-icons is installed
+import { IoIosSearch } from "react-icons/io";
 
 function SearchToggle() {
   const [showInput, setShowInput] = useState(false);
@@ -10,8 +10,8 @@ function SearchToggle() {
   return (
     <div className="flex items-center space-x-2">
       {/* Search Icon */}
-      <button onClick={handleToggle} className="text-black hover:text-pink-300">
-        <FaSearch size={15} />
+      <button onClick={handleToggle} className="text-rose-900 font-extrabold">
+        <IoIosSearch  size={19} />
       </button>
 
       {/* Conditional Input Field */}
