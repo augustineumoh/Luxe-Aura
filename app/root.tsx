@@ -17,7 +17,7 @@ import logo from"./main logo.png";
 //  import hero1 from "./hero1.jpg";
  import { useEffect, useState } from "react";
 import HeroCarousel from "./hro";
-import AOS from "aos";
+// import AOS from "aos";
 import "aos/dist/aos.css";
 
 
@@ -44,11 +44,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  useEffect(() => {
-    AOS.init({
-      duration: 1000, // animation duration (in ms)
-      once: true,     // whether animation should happen only once
-    });
+   useEffect(() => {
+    // Only run on client
+    if (typeof window !== 'undefined') {
+      import('aos').then((AOS) => {
+        AOS.init({ duration: 1000 });
+      });
+      import('aos/dist/aos.css');
+    }
   }, []);
 
   return (
@@ -84,6 +87,59 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <HeroCarousel/>
 
         {children}
+        <footer className="bg-[#B76E79] text-[#fffff0] pt-16  text-center" data-aos="fade-up">
+  {/* Manifesto */}
+  <p className="text-lg italic max-w-2xl mx-auto mb-8">
+    Luxe Aura is more than a brand—it’s a philosophy. We believe elegance is a daily ritual, and every detail matters.
+  </p>
+
+  {/* Newsletter Signup */}
+  <form className="max-w-md mx-auto mb-10">
+    <label htmlFor="email" className="block text-sm mb-2 font-medium">Join our newsletter</label>
+    <div className="flex items-center border border-deepplum rounded-full overflow-hidden">
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        className="flex-grow px-4 py-2 bg-transparent focus:outline-none"
+      />
+      <button
+        type="submit"
+        className="bg-deepplum text-ivory px-6 py-2 font-medium hover:bg-rosegold transition"
+      >
+        Subscribe
+      </button>
+    </div>
+  </form>
+
+  {/* Social Icons */}
+  <div className="flex justify-center space-x-6 mb-8">
+    <a href="https://instagram.com/luxeaura" className="text-rosegold hover:text-deepplum transition">
+      <i className="fab fa-instagram text-2xl"></i>
+    </a>
+    <a href="https://facebook.com/luxeaura" className="text-rosegold hover:text-deepplum transition">
+      <i className="fab fa-facebook text-2xl"></i>
+    </a>
+    <a href="https://twitter.com/luxeaura" className="text-rosegold hover:text-deepplum transition">
+      <i className="fab fa-twitter text-2xl"></i>
+    </a>
+  </div>
+
+  {/* Footer Links */}
+  <div className="text-sm space-x-4">
+    <a href="/about" className="hover:underline">About</a>
+    <a href="/journal" className="hover:underline">Journal</a>
+    <a href="/contact" className="hover:underline">Contact</a>
+    <a href="/privacy" className="hover:underline">Privacy</a>
+  </div>
+
+  {/* Copyright */}
+  <div className="h-1 max-w-full bg-gradient-to-r from-rose-200 via-[#fffff0] to-rose-200 opacity-30 mb-2 mt-6"></div>
+
+  <div className="border-t border-rose-700 text-center py-4 text-sm sm:text-base text-[#fffff0]">
+    © {new Date().getFullYear()} Luxe Aura. All rights reserved.
+  </div>
+</footer>
         <ScrollRestoration />
         <Scripts />
       </body>
