@@ -10,15 +10,16 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import logo from"./main logo.png";
-//  import { IoSearchOutline } from "react-icons/io5";
+import { BsInstagram } from "react-icons/bs";
  import { IoPersonOutline } from "react-icons/io5";
  import { BsBag } from "react-icons/bs";
  import SearchToggle from "./search";
-//  import hero1 from "./hero1.jpg";
+import { BsTwitterX } from "react-icons/bs";
  import { useEffect, useState } from "react";
-import HeroCarousel from "./hro";
-// import AOS from "aos";
+// import HeroCarousel from "./hro";
+import { FaFacebook } from "react-icons/fa";
 import "aos/dist/aos.css";
+import { Link } from "react-router";
 
 
 export const links: Route.LinksFunction = () => [
@@ -70,7 +71,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <div>
                   <ul className="flex gap-5 uppercase font-bold text-rose-900">
                     <li>New</li>
-                    <li>Perfume</li>
+                    <Link to="/perfume"><li>Perfume</li></Link>
                     <li>Jewelries</li>
                   </ul>
                 </div>
@@ -84,17 +85,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
             </nav>
-        <HeroCarousel/>
+        {/* <HeroCarousel/> */}
 
         {children}
         <footer className="bg-[#B76E79] text-[#fffff0] pt-16  text-center" data-aos="fade-up">
   {/* Manifesto */}
-  <p className="text-lg italic max-w-2xl mx-auto mb-8">
+  <p className="text-lg italic text-[#fffff0] max-w-2xl mx-auto mb-8">
     Luxe Aura is more than a brand—it’s a philosophy. We believe elegance is a daily ritual, and every detail matters.
   </p>
 
   {/* Newsletter Signup */}
-  <form className="max-w-md mx-auto mb-10">
+  <form className="max-w-md mx-auto mb-10 text-[#fffff0]">
     <label htmlFor="email" className="block text-sm mb-2 font-medium">Join our newsletter</label>
     <div className="flex items-center border border-deepplum rounded-full overflow-hidden">
       <input
@@ -105,7 +106,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       />
       <button
         type="submit"
-        className="bg-deepplum text-ivory px-6 py-2 font-medium hover:bg-rosegold transition"
+        className="bg-deepplum text-[#fffff0] px-6 py-2 font-medium hover:bg-rosegold transition"
       >
         Subscribe
       </button>
@@ -114,19 +115,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   {/* Social Icons */}
   <div className="flex justify-center space-x-6 mb-8">
-    <a href="https://instagram.com/luxeaura" className="text-rosegold hover:text-deepplum transition">
-      <i className="fab fa-instagram text-2xl"></i>
+    <a href="https://instagram.com/luxeaura" className="text-[#fffff0] hover:text-rose-300 transition">
+      <BsInstagram />
     </a>
-    <a href="https://facebook.com/luxeaura" className="text-rosegold hover:text-deepplum transition">
-      <i className="fab fa-facebook text-2xl"></i>
+    <a href="https://facebook.com/luxeaura" className="text-[#fffff0] hover:text-rose-300 transition">
+      <FaFacebook />
     </a>
-    <a href="https://twitter.com/luxeaura" className="text-rosegold hover:text-deepplum transition">
-      <i className="fab fa-twitter text-2xl"></i>
+    <a href="https://twitter.com/luxeaura" className="text-[#fffff0] hover:text-rose-300 transition">
+      <BsTwitterX />
     </a>
   </div>
 
   {/* Footer Links */}
-  <div className="text-sm space-x-4">
+  <div className="text-sm text-[#fffff0] space-x-4">
     <a href="/about" className="hover:underline">About</a>
     <a href="/journal" className="hover:underline">Journal</a>
     <a href="/contact" className="hover:underline">Contact</a>

@@ -42,6 +42,7 @@ import lag from "./lag1.jpg"
 import paris from "./paris.jpg"
 import tokyo from "./tokyo.jpg"
 import { Autoplay } from 'swiper/modules';
+import HeroCarousel from './hro';
 
 
 const products = [
@@ -123,6 +124,10 @@ function ProductSlider() {
       }
     }, []);
   return (
+    <div>
+
+    
+    <HeroCarousel/>
     <div className='bg-gradient-to-r from-[#FFFFF0] via-rose-200 to-[#FFFFF0] ' data-aos="fade-up">
 
     
@@ -397,7 +402,7 @@ function ProductSlider() {
   </section>
 
     </div>
-  
+  </div>
   );
 }
 type productprops={
