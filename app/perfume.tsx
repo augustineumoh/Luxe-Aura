@@ -28,6 +28,14 @@ import jasmine from "./jasmine.jpg"
 import burberry from "./burberry.jpg"
 import maisonf from "./maison.jpg"
 import musk from "./musk.jpg"
+import lazy from "./lazy.jpg"
+import blanche from "./blanche.jpg"
+import heretic from "./musk serene.jpg"
+import malin from "./malin.jpg"
+import xtra from "./xtra.jpg"
+import cashmere from "./korres.jpg"
+import chloe from "./chloe serene.jpg"
+import missing from "./phlur.jpg"
 
 
 
@@ -41,7 +49,7 @@ export default function Perfume() {
       image: dior,
       price: "₦493,000",
       link: "/perfume/palazzo-noir",
-      notes: "Top notes: rose, vanilla, amber",
+      notes: "Top notes: A youthful mix of Damask and Grasse roses with citrus accents—flirtatious and refined.",
       mood: "Romantic",
     },
     {
@@ -50,7 +58,7 @@ export default function Perfume() {
       image: narciso,
       price: "₦865,000",
       link: "/perfume/velvet-bloom",
-      notes: "Top notes: rose, vanilla, amber",
+      notes: "Top notes: Sensual musk, rose, and soft woods create a whisper of intimacy and elegance.",
       mood: "Romantic",
     },
     {
@@ -59,7 +67,7 @@ export default function Perfume() {
       image: ysl,
       price: "₦865,000",
       link: "/perfume/ivory-whisper",
-      notes: "Top notes: rose, vanilla, amber",
+      notes: "Top notes: Passionate and modern with strawberry, raspberry, and white florals—perfect for a night out.",
       mood: "Romantic",
     },
     {
@@ -68,7 +76,7 @@ export default function Perfume() {
       image: viktor,
       price: "₦493,000",
       link: "/perfume/palazzo-noir",
-      notes: "Top notes: rose, vanilla, amber",
+      notes: "Top notes: An explosion of jasmine, orange blossom, and patchouli—sweet and seductive.",
       mood: "Romantic",
     },
     {
@@ -77,7 +85,7 @@ export default function Perfume() {
       image: tom,
       price: "₦865,000",
       link: "/perfume/velvet-bloom",
-      notes: "Top notes: rose, vanilla, amber",
+      notes: "Top notes: Bold and sensual with black orchid, honey, and rum—ideal for making a statement.",
       mood: "Romantic",
     },
     {
@@ -86,7 +94,7 @@ export default function Perfume() {
       image: jo,
       price: "₦865,000",
       link: "/perfume/ivory-whisper",
-      notes: "Top notes: rose, vanilla, amber",
+      notes: "Top notes: Soft peony, red apple, and suede—elegant and flirtatious, like a romantic daydream.",
       mood: "Romantic",
     },
     {
@@ -95,7 +103,7 @@ export default function Perfume() {
       image: chan,
       price: "₦493,000",
       link: "/perfume/palazzo-noir",
-      notes: "Top notes: rose, vanilla, amber",
+      notes: "Top notes: A timeless blend of citrus, rose, and patchouli that radiates elegance and allure.",
       mood: "Romantic",
     },
     {
@@ -104,7 +112,7 @@ export default function Perfume() {
       image: lamour,
       price: "₦865,000",
       link: "/perfume/velvet-bloom",
-      notes: "Top notes: rose, vanilla, amber",
+      notes: "Top notes: Delicate floral notes of rose, gardenia, and jasmine with a warm woody base—pure romantic poetry.",
       mood: "Romantic",
     },
     {
@@ -113,7 +121,7 @@ export default function Perfume() {
       image: jacob,
       price: "₦865,000",
       link: "/perfume/ivory-whisper",
-      notes: "Top notes: rose, vanilla, amber",
+      notes: "Top notes: Playful and fresh with almond milk, rhubarb, and daffodil—ideal for self-love and lighthearted romance.",
       mood: "Romantic",
     },
     {
@@ -275,8 +283,80 @@ export default function Perfume() {
       image: musk,
       price: "₦865,000",
       link: "/perfume/ivory-whisper",
-      notes: "Top notes:A classic soft musk with floral undertones — gentle and nostalgic.",
+      notes: "Top notes: A classic soft musk with floral undertones — gentle and nostalgic.",
       mood: "Soft",
+    },
+    {
+      id: 28,
+      title: "Maison Margiela Replica Lazy Sunday Morning",
+      image: lazy,
+      price: "₦865,000",
+      link: "/perfume/ivory-whisper",
+      notes: "Top notes: Aldehydes, pear, and lily of the valley recreate the feeling of clean sheets and a slow morning",
+      mood: "Serene",
+    },
+    {
+      id: 29,
+      title: "Byredo Blanche Eau de Parfum",
+      image: blanche,
+      price: "₦865,000",
+      link: "/perfume/ivory-whisper",
+      notes: "Top notes: Soft sandalwood and light florals inspired by the color white—minimalist and pure.",
+      mood: "Serene",
+    },
+    {
+      id: 30,
+      title: "Heretic Parfum Bergamusk EDP",
+      image: heretic,
+      price: "₦865,000",
+      link: "/perfume/ivory-whisper",
+      notes: "Top notes: Bergamot, white musk, and sandalwood offer a plant-based, aromatherapeutic calm.",
+      mood: "Serene",
+    },
+    {
+      id: 31,
+      title: "Malin + Goetz Stem EDP",
+      image: malin,
+      price: "₦865,000",
+      link: "/perfume/ivory-whisper",
+      notes: "Top notes: Earthy greens and freesia evoke the scent of a flower shop—natural and grounding.",
+      mood: "Serene",
+    },
+    {
+      id: 32,
+      title: "Clean Reserve Warm Cotton",
+      image: xtra,
+      price: "₦865,000",
+      link: "/perfume/ivory-whisper",
+      notes: "Top notes: Skin-like musk, amber, and bergamot create a comforting second-skin scent.",
+      mood: "Serene",
+    },
+    {
+      id: 33,
+      title: "Korres Cashmere Kumquat Eau de Toilette",
+      image: cashmere,
+      price: "₦865,000",
+      link: "/perfume/ivory-whisper",
+      notes: "Top notes: A gentle blend of citrus and cashmere woods—sweet and soothing.",
+      mood: "Serene",
+    },
+    {
+      id: 34,
+      title: "Chloé Love Story Eau de Parfum",
+      image: chloe,
+      price: "₦865,000",
+      link: "/perfume/ivory-whisper",
+      notes: "Top notes: Jasmine and neroli with fruity florals—fresh and romantic without being overpowering.",
+      mood: "Serene",
+    },
+    {
+      id: 35,
+      title: "Phlur Missing Person",
+      image: missing,
+      price: "₦865,000",
+      link: "/perfume/ivory-whisper",
+      notes: "Top notes: A delicate mix of skin musk, bergamot, and jasmine—like a gentle memory on the skin.",
+      mood: "Serene",
     },
   ];
 
@@ -288,7 +368,7 @@ export default function Perfume() {
     <div>
       {/* Hero Section */}
       <section
-        className="relative text-rose-900 py-32 px-6 md:px-20 bg-cover bg-no-repeat h-125" 
+        className="relative text-[#fffff0] py-32 px-6 md:px-20 bg-cover bg-no-repeat h-148" 
         style={{ backgroundImage: `url(${img})` }}
       >
         <div className="absolute inset-0 bg-black/10 backdrop-blur-sm z-0"></div>
@@ -317,7 +397,9 @@ export default function Perfume() {
       </section>
 
       {/* Filter + Product Grid */}
-      <section className="bg-gradient-to-r from-[#FFFFF0] via-rose-200 to-[#FFFFF0] py-20 px-6 md:px-20 text-deepplum" data-aos='fade-up'>
+      <section className="bg-gradient-to-r from-[#FFFFF0] via-rose-200 to-[#FFFFF0] py-20 px-6 md:px-20 text-deepplum" 
+      id="mood-filter"
+      data-aos='fade-up'>
         {/* Filter Bar */}
         <div className="flex justify-center space-x-4 mb-12" data-aos='fade-right'>
           {["All", "Romantic", "Bold", "Serene","Soft"].map((mood) => (

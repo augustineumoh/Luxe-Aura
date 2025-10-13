@@ -72,11 +72,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <ul className="flex gap-5 uppercase font-bold text-rose-900">
                     <li>New</li>
                     <Link to="/perfume"><li>Perfume</li></Link>
-                    <li>Jewelries</li>
+                    <Link to="/jewery"><li>Jewelries</li></Link> 
                   </ul>
                 </div>
                 <div>
-                  <img src={logo} alt="Scentelle Logo" width={180} />
+                  <Link to="/mainpage"><img src={logo} alt="Scentelle Logo" width={180} /></Link>
                 </div>
                 <div className="flex gap-4 items-center font-extrabold text-rose-900">
                   <SearchToggle />

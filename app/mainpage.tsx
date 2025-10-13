@@ -226,7 +226,7 @@ function ProductSlider() {
       title="Romantic"
       description="Soft florals, rose gold accents, and scents that linger like love notes."
       image={section1}
-      link="/collections/romantic"
+      link="/perfume#mood-filter"
     />
 
     {/* Mood Card 2: Bold */}
@@ -234,7 +234,7 @@ function ProductSlider() {
       title="Bold"
       description="Deep plum tones, statement jewelry, and fragrances that command attention."
       image={section2}
-      link="/collections/bold"
+      link="/perfume#mood-filter"
     />
 
     {/* Mood Card 3: Serene */}
@@ -242,7 +242,7 @@ function ProductSlider() {
       title="Serene"
       description="Ivory palettes, minimalist pieces, and fresh notes that calm the soul."
       image={section3}
-      link="/collections/serene"
+      link="/perfume#mood-filter"
     />
   </div>
 </section>
