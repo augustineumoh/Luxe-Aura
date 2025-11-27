@@ -36,6 +36,7 @@ import xtra from "./xtra.jpg"
 import cashmere from "./korres.jpg"
 import chloe from "./chloe serene.jpg"
 import missing from "./phlur.jpg"
+import maisonfrancis from "./maison Francis.jpg"
 
 
 
@@ -358,6 +359,15 @@ export default function Perfume() {
       notes: "Top notes: A delicate mix of skin musk, bergamot, and jasmine—like a gentle memory on the skin.",
       mood: "Serene",
     },
+    {
+      id: 36,
+      title: "Maison Francis Kurkdjian Aqua Universalis",
+      image: maisonfrancis,
+      price: "₦865,000",
+      link: "/perfume/ivory-whisper",
+      notes: "Top notes: Crisp citrus and white florals with musky woods—like freshly laundered linen on a summer day.",
+      mood: "Serene",
+    },
   ];
 
   const filteredPerfumes = perfumes.filter((p) =>
@@ -454,7 +464,7 @@ function PerfumeCard({ title, image, price, link, notes }:perfumeprop) {
       className="relative block rounded-lg overflow-hidden shadow-md hover:shadow-xl transition group border border-rose-100"
      data-aos='fade-up'>
       {/* Hover Note Preview */}
-      <div className="absolute bottom-0 left-0 w-full bg-rose-900 text-white text-sm px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="absolute top-0 left-0 w-full bg-rose-900 text-white text-sm px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity">
         {notes}
       </div>
 

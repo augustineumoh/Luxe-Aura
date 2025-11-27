@@ -468,7 +468,7 @@ function JournalCard({ title, image, excerpt, link }:journalprop) {
       <div className="p-6 bg-rose-200 group-hover:bg-rosegold transition-colors">
         <h3 className="text-xl font-semibold mb-2 text-rose-900 group-hover:text-rose-700">{title}</h3>
         <p className="text-sm mb-4 text-rose-900 group-hover:text-rose-700">{excerpt}</p>
-        <span className="text-rose-900 group-hover:text-rose-700 font-medium group underline underline-offset-2 flex items-center gap-2">
+        <span className="text-rose-900 group-hover:text-rose-700 font-medium group flex items-center gap-2">
           Read article <FaLongArrowAltRight />
         </span>
       </div>
@@ -489,7 +489,7 @@ function GiftCard({ title, image, price, link }:giftprop) {
       <div className="p-6 bg-rose-200 group-hover:bg-rosegold transition-colors">
         <h3 className="text-xl font-semibold mb-2 text-rose-900 group-hover:text-rose-700">{title}</h3>
         <p className="text-sm mb-4 group-hover:text-rose-700 text-rose-900">Starting at {price}</p>
-        <span className="text-rose-900 group-hover:text-rose-700 font-medium underline underline-offset-2 flex items-center gap-2">
+        <span className="text-rose-900 group-hover:text-rose-700 font-medium  flex items-center gap-2">
           View Set <FaLongArrowAltRight />
         </span>
       </div>
@@ -516,7 +516,7 @@ function CityCard({ city, image, quote, customer, product, link }:cityprop) {
         <p className="text-sm text-deepplum group-hover:text-rose-700 text-rose-900 mb-4">– {customer}</p>
         <a
           href={link}
-          className="text-rose-900 group-hover:text-rose-700  font-medium underline underline-offset-2 flex items-center gap-2"
+          className="text-rose-900 group-hover:text-rose-700  font-medium flex items-center gap-2"
         >
           View {product} <FaLongArrowAltRight />
         </a>
