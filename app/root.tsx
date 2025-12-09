@@ -66,11 +66,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
           scrolled ? 'bg-[#FFFFF0] text-black shadow-md' : 'bg-transparent text-black'
-        }`}>
+        }`} data-aos="fade-down">
               <div className="flex items-center w-full justify-center gap-70 py-1">
                 <div>
                   <ul className="flex gap-5 uppercase font-bold text-rose-900">
-                    <li>New</li>
+                    <Link to="/new_product"><li>New</li></Link>
                     <Link to="/perfume"><li>Perfume</li></Link>
                     <Link to="/jewery"><li>Jewelries</li></Link> 
                   </ul>

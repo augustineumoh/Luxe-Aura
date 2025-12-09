@@ -124,7 +124,8 @@ function ProductSlider() {
       }
     }, []);
   return (
-    <div>
+    <>
+    <div className="mx-auto max-w-screen overflow-hidden">
 
     
     <HeroCarousel/>
@@ -403,6 +404,7 @@ function ProductSlider() {
 
     </div>
   </div>
+  </>
   );
 }
 type productprops={

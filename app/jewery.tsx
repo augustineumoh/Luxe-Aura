@@ -47,6 +47,7 @@ import diamondstud from "./diamondstud earing.jpg"
 import diamondpearl from "./wedding earring.jpg"
 import hoopearing from "./hoop earing.jpg"
 import thickhoopearing from "./thick hoop earing.jpg"
+import { Link } from "react-router";
 
 
 export default function jewery(){
@@ -429,26 +430,15 @@ export default function jewery(){
       >
         <div className="absolute inset-0 bg-black/10 backdrop-blur-sm z-0"></div>
         {/* Content */}
-  <div className="relative z-10 max-w-3xl mx-auto text-center mt-25">
-    <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6">
-      Jewelry That Speaks Without Words
-    </h1>
-    <p className="text-lg md:text-xl italic mb-8 text-rosegold">
-      Minimalist forms. Maximal emotion. Crafted to whisper elegance.
-    </p>
-    <div className="flex justify-center space-x-6">
-      <a
-        href="/jewelry/shop"
-        className="bg-rosegold text-rose-900 px-6 py-3 font-bold rounded-2xl hover:bg-rose-900 hover:text-[#fffff0] transition"
-      >
-        Shop Jewelry
-      </a>
-      <a
-        href="/journal/jewelry-language"
-        className="border border-rose-900 text-rose-900 px-6 py-3 rounded-2xl font-bold hover:bg-rose-900 hover:text-[#fffff0] transition"
-      >
-        Read the Story
-      </a>
+  <div className="absolute inset-0 bg-opacity-40 flex flex-col justify-end items-center px-6 pb-5 text-black z-10">
+    <div className="text-center max-w-xl text-rose-900" data-aos="fade-up">
+      <h1 className="text-3xl font-bold mb-4">Jewelry That Speaks Without Words</h1>
+      <p className="text-lg mb-8 font-bold">Minimalist forms. Maximal emotion. Crafted to whisper elegance.</p>
+      <Link to="/shop_all"><button className="border border-rose-900 font-bold text-rose-900 px-6 py-3 rounded-2xl uppercase tracking-wide hover:bg-rose-900 hover:text-[#FFFFF0] transition" data-aos="">
+        Shop All
+      </button></Link>
+      <Link to="/jewelry_story"><button className="ml-4 border uppercase font-bold border-rose-900 px-6 py-3 hover:bg-rose-900 hover:text-[#FFFFF0] rounded-2xl transition" data-aos="">Read the Story</button>
+    </Link>
     </div>
   </div>
 
@@ -539,9 +529,13 @@ function JewelryCard({ title, image, price, link }:jewelprop) {
           {title}
         </h3>
         <p className="text-sm mb-4 group-hover:text-rose-900">{price}</p>
-        <span className="text-rosegold group-hover:text-rose-900 font-medium flex items-center gap-3">
+        <div className="flex justify-between items-center">
+         <span className="text-rosegold group-hover:text-rose-900 font-medium flex items-center gap-3 rounded-2xl border p-2 transition border-rose-900 hover">
           View Details <FaLongArrowAltRight />
-          </span>
+          </span> 
+          <button className="text-rosegold group-hover:text-rose-900 font-medium flex items-center gap-3">Add to cart <FaLongArrowAltRight /></button>
+        </div>
+        
       </div>
     </a>
   );

@@ -7,13 +7,16 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 } */
  /* For headings and logo */
-h1, h2, h3, .brand-name {
+/* h1, h2, h3, .brand-name {
   font-family: 'Cormorant Garamond', serif;
-}
+} */
 
 /* For body text and navigation */
 body, p, a, .nav-link {
   font-family: 'Raleway', sans-serif;
+}
+body {
+  overflow-x: hidden;
 }
 
 /* html,

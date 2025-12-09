@@ -18,7 +18,7 @@ function Navbar() {
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
   scrolled ? 'bg-white text-black shadow-md' : 'bg-transparent text-white'
-}`}>
+}`} >
       <div className="flex items-center w-full justify-evenly py-4">
         <div>
           <ul className="flex gap-5 uppercase font-medium">

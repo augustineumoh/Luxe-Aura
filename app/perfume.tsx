@@ -37,6 +37,7 @@ import cashmere from "./korres.jpg"
 import chloe from "./chloe serene.jpg"
 import missing from "./phlur.jpg"
 import maisonfrancis from "./maison Francis.jpg"
+import { Link } from "react-router"
 
 
 
@@ -382,28 +383,17 @@ export default function Perfume() {
         style={{ backgroundImage: `url(${img})` }}
       >
         <div className="absolute inset-0 bg-black/10 backdrop-blur-sm z-0"></div>
-        <div className="relative z-10 max-w-3xl mx-auto text-center mt-30">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6">
-            Discover Your Signature Scent
-          </h1>
-          <p className="text-lg font-bold md:text-xl italic mb-8 text-rosegold">
-            Perfumes that whisper elegance and linger like memory
-          </p>
-          <div className="flex justify-center space-x-6">
-            <a
-              href="/perfume/shop"
-              className="bg-rosegold text-rose-900 px-6 py-3 font-bold rounded-2xl hover:bg-rose-900 hover:text-[#fffff0] transition"
-            >
-              Shop Perfumes
-            </a>
-            <a
-              href="/perfume/story"
-              className="border border-rose-900 text-rose-900 px-6 py-3 rounded-2xl font-bold hover:bg-rose-900 hover:text-[#fffff0] transition"
-            >
-              Our Fragrance Story
-            </a>
-          </div>
-        </div>
+        <div className="absolute inset-0 bg-opacity-40 flex flex-col justify-end items-center px-6 pb-5 text-black z-10">
+    <div className="text-center max-w-xl text-rose-900" data-aos="fade-up">
+      <h1 className="text-4xl font-bold mb-4">Discover Your Signature Scent</h1>
+      <p className="text-lg mb-8 font-bold">Perfumes that whisper elegance and linger like memory</p>
+      <Link to="/shop_all"><button className="border border-rose-900 font-bold text-rose-900 px-6 py-3 rounded-2xl uppercase tracking-wide hover:bg-rose-900 hover:text-[#FFFFF0] transition" data-aos="">
+        Shop All
+      </button></Link>
+      <Link to="/fragrance_story"><button className="ml-4 border uppercase font-bold border-rose-900 px-6 py-3 hover:bg-rose-900 hover:text-[#FFFFF0] rounded-2xl transition" data-aos="">Our Fragrance Story</button>
+    </Link>
+    </div>
+  </div>
       </section>
 
       {/* Filter + Product Grid */}
