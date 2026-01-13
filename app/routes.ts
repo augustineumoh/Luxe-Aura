@@ -9,6 +9,17 @@ export default [index("routes/home.tsx"),
     route("jewelry_story","./jewelry_story.tsx"),
     route("jewelry_carousel","./jewelry_carousel.tsx"),
     route("shop_all","./shop_all.tsx"),
-    route("new_product","./new_product.tsx")
+    route("new_product","./new_product.tsx"),
+    route("cart","./cart.tsx"),
+    route("login","./login.tsx"),
+    route("register","./register.tsx"),
+    route("profile", "./profile.tsx"),
+    route("nav","./nav.tsx"),
+    route("checkout", "./checkout.tsx"),  
+    route("payment_success", "./payment_success.tsx"), 
+    route("wishlist", "./wishlist.tsx"),  
+    route("orders", "./orders.tsx"), 
+    route("orderSuccess","./orderSuccess.tsx"),
+    route("orderDetails/:id","./orderDetails.tsx")
 
 ] satisfies RouteConfig;

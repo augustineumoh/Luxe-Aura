@@ -1,4 +1,11 @@
-import { useState, useEffect } from "react";
+// app/wishlist.tsx
+import { useWishlist } from './wishlistContext';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router';
+import api from './api/axios';
+import { TbCurrencyNaira } from 'react-icons/tb';
+import { IoHeartOutline, IoHeart, IoTrashOutline, IoBagAddOutline } from 'react-icons/io5';
+import { useCart } from './cartContext';
 import img from "./shopping-page.jpg"
 import chan from "./chanel romantic.jpg"
 import lamour from "./lamour romantic.jpg"
@@ -18,8 +25,6 @@ import sha from "./sha bold.jpg"
 import mill from "./millon.jpg"
 import luten from "./luten bold.jpg"
 import irish from "./memo.jpg"
-import { TbCurrencyNaira } from "react-icons/tb";
-// import { FaLongArrowAltRight } from "react-icons/fa";
 import eau from "./chanel soft.jpg"
 import glossier from "./Glossier soft.jpg"
 import amazing from "./amazing soft.jpg"
@@ -38,8 +43,6 @@ import cashmere from "./korres.jpg"
 import chloe from "./chloe serene.jpg"
 import missing from "./phlur.jpg"
 import maisonfrancis from "./maison Francis.jpg"
-// import jewel1 from "./jewel1.jpg"
-// import { FaLongArrowAltRight } from "react-icons/fa";
 import whisperChain from "./Whisper Chain Necklace.jpg"
 import museHoops from "./Muse Gold Hoops.jpg"
 import statementring from "./Ivory Statement Ring.jpg"
@@ -85,10 +88,6 @@ import diamondstud from "./diamondstud earing.jpg"
 import diamondpearl from "./wedding earring.jpg"
 import hoopearing from "./hoop earing.jpg"
 import thickhoopearing from "./thick hoop earing.jpg"
-import { useCart } from "./cartContext";
-import api from "./api/axios";
-import { IoHeart, IoHeartOutline } from 'react-icons/io5';
-import { useWishlist } from './wishlistContext'
 
 
 // Sample product data
@@ -662,226 +661,167 @@ const fallbackProducts = [
          category: "Jewelry",
        },
 ];
+const fallbackProductMap = Object.fromEntries(
+  fallbackProducts.map(p => [p.id, p.image])
+);
 
-const ShopAllPage = () => {
-  const [products, setProducts] = useState<any[]>(fallbackProducts);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterCategory, setFilterCategory] = useState("All");
-  const [sortOption, setSortOption] = useState("None");
-  const [loading, setLoading] = useState(false);
-
-  // Cart functionality
-  const { addToCart, loading: cartLoading } = useCart();
+const Wishlist: React.FC = () => {
+  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart();
+  const { removeFromWishlist: removeFromWishlistContext, refreshWishlist } = useWishlist(); // ✅ Use context
   const [addingToCart, setAddingToCart] = useState<number | null>(null);
-  const [messages, setMessages] = useState<{ [key: number]: string }>({});
-  const { wishlistItems, addToWishlist, removeFromWishlist, isInWishlist } = useWishlist(); // ✅ Use context
-  const [wishlistLoading, setWishlistLoading] = useState<number | null>(null);
 
-  
+  useEffect(() => {
+    fetchWishlist();
+  }, []);
 
-   const toggleWishlist = async (productId: number, event: React.MouseEvent) => {
-    event.stopPropagation();
-    
+  const fetchWishlist = async () => {
     try {
-      setWishlistLoading(productId);
-      
-      if (isInWishlist(productId)) {
-        await removeFromWishlist(productId);
-      } else {
-        await addToWishlist(productId);
-      }
-    } catch (error: any) {
-      console.error('Wishlist error:', error);
-      alert(error?.response?.data?.error || 'Failed to update wishlist. Please login.');
+      setLoading(true);
+      const response = await api.get('/auth/wishlist/');
+      setWishlistItems(response.data);
+    } catch (error) {
+      console.error('Error fetching wishlist:', error);
     } finally {
-      setWishlistLoading(null);
+      setLoading(false);
     }
   };
 
-  // Filter logic
-  const filteredProducts = products.filter((product) => {
-    const name = product.name || "";
-    const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      filterCategory === "All" || product.category === filterCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const removeFromWishlist = async (itemId: number, productId: number) => {
+    try {
+      await removeFromWishlistContext(productId); // ✅ Use context method
+      setWishlistItems(wishlistItems.filter(item => item.id !== itemId));
+    } catch (error) {
+      console.error('Error removing from wishlist:', error);
+    }
+  };
 
-  // Sort logic
-  const sortedProducts = [...filteredProducts];
-  if (sortOption === "LowToHigh") {
-    sortedProducts.sort((a, b) => a.price - b.price);
-  } else if (sortOption === "HighToLow") {
-    sortedProducts.sort((a, b) => b.price - a.price);
-  }
-
-  // Handle add to cart
-  const handleAddToCart = async (productId: number) => {
+  const handleAddToCart = async (productId: number, wishlistItemId: number) => {
     try {
       setAddingToCart(productId);
       await addToCart(productId, 1);
-      
-      // Show success message
-      setMessages({ ...messages, [productId]: "✓ Added to cart!" });
-      setTimeout(() => {
-        setMessages((prev) => ({ ...prev, [productId]: "" }));
-      }, 2000);
-    } catch (error: any) {
-      console.error('Add to cart error:', error);
-      // Show error message
-      const errorMsg = error?.response?.data?.error || error?.message || "Failed to add to cart";
-      setMessages({ ...messages, [productId]: errorMsg });
-      setTimeout(() => {
-        setMessages((prev) => ({ ...prev, [productId]: "" }));
-      }, 3000);
+      await removeFromWishlist(wishlistItemId, productId);
+    } catch (error) {
+      console.error('Error adding to cart:', error);
     } finally {
       setAddingToCart(null);
     }
   };
 
-  return (
-    <div className="bg-gradient-to-r from-[#FFFFF0] via-rose-100 to-[#FFFFF0] min-h-screen">
-      <section
-        className="relative bg-cover bg-center h-[100vh] flex items-center justify-center"
-        style={{ backgroundImage: `url(${img})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-rose-300/30 to-black/40 animate-pulse"></div>
-        <div className="absolute inset-0 bg-opacity-40 flex flex-col justify-end items-center px-6 pb-5 text-black z-10">
-          <div className="text-center max-w-xl text-rose-900" data-aos="fade-up">
-            <h1 className="text-4xl font-bold mb-4">Discover Your Signature Aura</h1>
-            <p className="text-lg mb-8 font-bold">
-              Explore our curated collection of fragrances and jewelry.
-            </p>
-            <button className="ml-4 border uppercase font-bold border-rose-900 px-6 py-3 hover:bg-rose-900 hover:text-[#FFFFF0] rounded-2xl transition">
-              Shop All Collections
-            </button>
-          </div>
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-r from-[#FFFFF0] via-rose-100 to-[#FFFFF0] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-rose-900 mx-auto mb-4"></div>
+          <p className="text-rose-900 text-lg font-semibold">Loading wishlist...</p>
         </div>
-      </section>
-
-      {/* Page Title */}
-      <div className="text-center mb-10 pt-8">
-        <h1 className="text-4xl md:text-5xl font-serif text-rose-900 font-bold">
-          Shop All
-        </h1>
-        <p className="text-lg text-rose-700 mt-2">
-          Discover our full collection of perfumes and jewelry
-        </p>
       </div>
+    );
+  }
 
-      {/* Search + Filter + Sort Controls */}
-      <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-12 px-4">
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full md:w-1/3 px-4 py-2 placeholder:text-rose-400 border border-rose-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-900"
-        />
-
-        <select
-          value={filterCategory}
-          onChange={(e) => setFilterCategory(e.target.value)}
-          className="w-full md:w-1/4 px-4 py-2 border text-rose-900 border-rose-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-900"
-        >
-          <option value="All">All Categories</option>
-          <option value="Perfume">Perfume</option>
-          <option value="Jewelry">Jewelry</option>
-        </select>
-
-        <select
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-          className="w-full md:w-1/4 px-4 py-2 border text-rose-900 border-rose-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-900"
-        >
-          <option value="None">Sort by</option>
-          <option value="LowToHigh">Price: Low to High</option>
-          <option value="HighToLow">Price: High to Low</option>
-        </select>
+  if (wishlistItems.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-r from-[#FFFFF0] via-rose-100 to-[#FFFFF0] flex items-center justify-center px-4">
+        <div className="text-center max-w-md">
+          <IoHeartOutline className="text-rose-300 text-8xl mx-auto mb-6" />
+          <h2 className="text-3xl font-bold text-rose-900 mb-4">Your Wishlist is Empty</h2>
+          <p className="text-gray-600 mb-8">
+            Start adding items you love to your wishlist!
+          </p>
+          <Link
+            to="/shop_all"
+            className="inline-block bg-rose-600 text-white px-8 py-3 rounded-lg hover:bg-rose-700 transition font-semibold"
+          >
+            Browse Products
+          </Link>
+        </div>
       </div>
+    );
+  }
 
-      {/* Product Grid */}
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto pb-12 px-4">
-        {sortedProducts.length > 0 ? (
-          sortedProducts.map((product) => (
+  return (
+    <div className="min-h-screen bg-gradient-to-r from-[#FFFFF0] via-rose-100 to-[#FFFFF0] py-12">
+      <div className="container mx-auto px-4 max-w-7xl">
+        <div className="flex items-center gap-3 mb-8">
+          <IoHeart className="text-rose-600 text-4xl" />
+          <h1 className="text-4xl font-bold text-rose-900">My Wishlist</h1>
+          <span className="bg-rose-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+            {wishlistItems.length}
+          </span>
+        </div>
+
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {wishlistItems.map((item) => (
             <div
-              key={product.id}
-              className="relative bg-white rounded-lg shadow-md hover:shadow-xl transition transform hover:-translate-y-2 flex flex-col"
-              data-aos="fade-up"
+              key={item.id}
+              className="bg-white rounded-xl shadow-md hover:shadow-xl transition group relative overflow-hidden"
             >
               <button
-    onClick={(e) => toggleWishlist(product.id, e)}
-    disabled={wishlistLoading === product.id}
-    className="absolute top-3 right-3 bg-white rounded-full p-2 shadow-lg hover:bg-rose-50 transition z-10 disabled:opacity-50"
-    aria-label="Add to wishlist"
+    onClick={() => removeFromWishlist(item.id, item.product.id)}
+    className="absolute top-3 right-3 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-red-50 transition"
   >
-    {wishlistLoading === product.id ? (
-      <div className="animate-spin h-6 w-6 border-2 border-rose-600 border-t-transparent rounded-full"></div>
-    ) : isInWishlist(product.id) ? (
-      <IoHeart className="text-rose-600" size={24} />
-    ) : (
-      <IoHeartOutline className="text-gray-400" size={24} />
-    )}
+    <IoTrashOutline className="text-red-500" size={20} />
   </button>
 
               {/* Product Image */}
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-64 object-cover rounded-t-lg"
-              />
+              <Link to={`/product/${item.product.id}`}>
+                <div className="h-64 overflow-hidden bg-rose-50">
+             <img
+  src={fallbackProductMap[item.product.id] ?? item.product.image}
+  alt={item.product.name}
+  className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+/>
+                </div>
+              </Link>
 
               {/* Product Info */}
-              <div className="flex flex-col justify-between flex-grow p-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-rose-900 line-clamp-2 mb-2">
-                    {product.name}
+              <div className="p-4">
+                <span className="inline-block bg-rose-100 text-rose-700 text-xs font-semibold px-2 py-1 rounded mb-2">
+                  {item.product.category}
+                </span>
+                
+                <Link to={`/product/${item.product.id}`}>
+                  <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-rose-600 transition">
+                    {item.product.name}
                   </h3>
-                  <p className="text-gray-600 text-sm mb-2">{product.category}</p>
-                  <p className="text-rose-700 font-bold text-xl flex items-center">
-                    <TbCurrencyNaira className="mr-1" size={24} />
-                    {product.price.toLocaleString()}
-                  </p>
+                </Link>
+
+                <div className="flex items-center text-rose-700 font-bold text-xl mb-4">
+                  <TbCurrencyNaira size={24} />
+                  <span>{Number(item.product.price).toLocaleString()}</span>
                 </div>
 
                 {/* Add to Cart Button */}
-                <div className="mt-4">
-                  <button
-                    onClick={() => handleAddToCart(product.id)}
-                    disabled={addingToCart === product.id || cartLoading}
-                    className={`w-full py-3 rounded-lg font-semibold transition-colors ${
-                      addingToCart === product.id
-                        ? "bg-rose-400 text-white cursor-wait"
-                        : "bg-rose-600 text-white hover:bg-rose-700"
-                    } disabled:opacity-50`}
-                  >
-                    {addingToCart === product.id ? "Adding..." : "Add to Cart"}
-                  </button>
-
-                  {/* Success/Error Message */}
-                  {messages[product.id] && (
-                    <p
-                      className={`text-sm mt-2 text-center font-medium ${
-                        messages[product.id].includes("Failed") || messages[product.id].includes("error")
-                          ? "text-red-600"
-                          : "text-green-600"
-                      }`}
-                    >
-                      {messages[product.id]}
-                    </p>
+                <button
+                  onClick={() => handleAddToCart(item.product.id, item.id)}
+                  disabled={addingToCart === item.product.id || item.product.stock === 0}
+                  className={`w-full py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2 ${
+                    item.product.stock === 0
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : addingToCart === item.product.id
+                      ? 'bg-rose-400 text-white'
+                      : 'bg-rose-600 text-white hover:bg-rose-700'
+                  }`}
+                >
+                  {item.product.stock === 0 ? (
+                    'Out of Stock'
+                  ) : addingToCart === item.product.id ? (
+                    'Adding...'
+                  ) : (
+                    <>
+                      <IoBagAddOutline size={20} />
+                      Add to Cart
+                    </>
                   )}
-                </div>
+                </button>
               </div>
             </div>
-          ))
-        ) : (
-          <p className="text-center text-rose-900 col-span-full text-xl py-16">
-            No products found.
-          </p>
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-export default ShopAllPage;
+export default Wishlist;

@@ -20,6 +20,10 @@ import { BsTwitterX } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
 import "aos/dist/aos.css";
 import { Link } from "react-router";
+import { CartProvider } from "./cartContext";
+import {AuthProvider} from "./authContext"
+import Navbar from "./nav"
+import {WishlistProvider} from "./wishlistContext"
 
 
 export const links: Route.LinksFunction = () => [
@@ -38,13 +42,13 @@ export const links: Route.LinksFunction = () => [
 export function Layout({ children }: { children: React.ReactNode }) {
    const [scrolled, setScrolled] = useState(false);
   
-   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  //  useEffect(() => {
+  //   const handleScroll = () => {
+  //     setScrolled(window.scrollY > 50);
+  //   };
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => window.removeEventListener('scroll', handleScroll);
+  // }, []);
    useEffect(() => {
     // Only run on client
     if (typeof window !== 'undefined') {
@@ -64,7 +68,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        <AuthProvider>
+        <CartProvider>
+          <WishlistProvider>
+          <Navbar/>
+        {/* <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
           scrolled ? 'bg-[#FFFFF0] text-black shadow-md' : 'bg-transparent text-black'
         }`} data-aos="fade-down">
               <div className="flex items-center w-full justify-center gap-70 py-1">
@@ -80,11 +88,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </div>
                 <div className="flex gap-4 items-center font-extrabold text-rose-900">
                   <SearchToggle />
-                  <IoPersonOutline size={18} />
-                  <BsBag size={18} />
+                  <Link to="/login"><IoPersonOutline size={18} /></Link>
+                  <Link to="/cart"><BsBag size={18} /></Link>
                 </div>
               </div>
-            </nav>
+            </nav> */}
         {/* <HeroCarousel/> */}
 
         {children}
@@ -141,6 +149,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
     © {new Date().getFullYear()} Luxe Aura. All rights reserved.
   </div>
 </footer>
+</WishlistProvider>
+ </CartProvider>
+ </AuthProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

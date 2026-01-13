@@ -1,12 +1,20 @@
 import ProductSlider from "~/mainpage";
-// import Perfume from "~/perfume";
+// import { BrowserRouter, Routes,Route } from "react-router";
+import Login from "~/login";
+import Cart from "~/cart";
+import ProtectedRoute from "~/protectedRoutes";
 
 
 export function Welcome() {
   return (
     <div>
       <ProductSlider/>
-      {/* <Perfume/> */}
+      <Login/>
+      
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+        
     </div>
   );
 }
