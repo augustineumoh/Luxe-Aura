@@ -77,6 +77,12 @@ const response = await api.post('http://127.0.0.1:8000/api/auth/login/', {
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
+          <Link 
+  to="/forgotPassword" 
+  className="text-sm text-rose-600 hover:text-rose-500"
+>
+  Forgot your password?
+</Link>
         </form>
         
         <p className="text-center text-gray-600 mt-6">

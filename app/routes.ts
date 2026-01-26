@@ -21,6 +21,8 @@ export default [index("routes/home.tsx"),
     route("orders", "./orders.tsx"), 
     route("orderSuccess","./orderSuccess.tsx"),
     route("orderDetails/:id","./orderDetails.tsx"),
-    route("footer","./footer.tsx")
+    route("footer","./footer.tsx"),
+    route("forgotPassword/","./forgotPassword.tsx"),
+    route("resetPassword/:uid/:token","./resetPassword.tsx"),
 
 ] satisfies RouteConfig;
