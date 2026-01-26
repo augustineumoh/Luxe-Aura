@@ -764,8 +764,8 @@ const ShopAllPage = () => {
         <h1 className="text-4xl md:text-5xl font-serif text-rose-900 font-bold">
           Shop All
         </h1>
-        <p className="text-lg text-rose-700 mt-2">
-          Discover our full collection of perfumes and jewelry
+        <p className="text-lg text-rose-700 mt-3">
+          Discover our full collection of perfumes and jewelry.
         </p>
       </div>
 
