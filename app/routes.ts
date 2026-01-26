@@ -20,6 +20,7 @@ export default [index("routes/home.tsx"),
     route("wishlist", "./wishlist.tsx"),  
     route("orders", "./orders.tsx"), 
     route("orderSuccess","./orderSuccess.tsx"),
-    route("orderDetails/:id","./orderDetails.tsx")
+    route("orderDetails/:id","./orderDetails.tsx"),
+    route("footer","./footer.tsx")
 
 ] satisfies RouteConfig;

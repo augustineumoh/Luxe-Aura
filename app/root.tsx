@@ -24,6 +24,7 @@ import { CartProvider } from "./cartContext";
 import {AuthProvider} from "./authContext"
 import Navbar from "./nav"
 import {WishlistProvider} from "./wishlistContext"
+import Footer from "./footer"
 
 
 export const links: Route.LinksFunction = () => [
@@ -96,59 +97,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {/* <HeroCarousel/> */}
 
         {children}
-        <footer className="bg-[#B76E79] text-[#fffff0] pt-16  text-center" data-aos="fade-up">
-  {/* Manifesto */}
-  <p className="text-lg italic text-[#fffff0] max-w-2xl mx-auto mb-8">
-    Luxe Aura is more than a brand—it’s a philosophy. We believe elegance is a daily ritual, and every detail matters.
-  </p>
-
-  {/* Newsletter Signup */}
-  <form className="max-w-md mx-auto mb-10 text-[#fffff0]">
-    <label htmlFor="email" className="block text-sm mb-2 font-medium">Join our newsletter</label>
-    <div className="flex items-center border border-deepplum rounded-full overflow-hidden">
-      <input
-        type="email"
-        id="email"
-        placeholder="Enter your email"
-        className="flex-grow px-4 py-2 bg-transparent focus:outline-none"
-      />
-      <button
-        type="submit"
-        className="bg-deepplum text-[#fffff0] px-6 py-2 font-medium hover:bg-rosegold transition"
-      >
-        Subscribe
-      </button>
-    </div>
-  </form>
-
-  {/* Social Icons */}
-  <div className="flex justify-center space-x-6 mb-8">
-    <a href="https://instagram.com/luxeaura" className="text-[#fffff0] hover:text-rose-300 transition">
-      <BsInstagram />
-    </a>
-    <a href="https://facebook.com/luxeaura" className="text-[#fffff0] hover:text-rose-300 transition">
-      <FaFacebook />
-    </a>
-    <a href="https://twitter.com/luxeaura" className="text-[#fffff0] hover:text-rose-300 transition">
-      <BsTwitterX />
-    </a>
-  </div>
-
-  {/* Footer Links */}
-  <div className="text-sm text-[#fffff0] space-x-4">
-    <a href="/about" className="hover:underline">About</a>
-    <a href="/journal" className="hover:underline">Journal</a>
-    <a href="/contact" className="hover:underline">Contact</a>
-    <a href="/privacy" className="hover:underline">Privacy</a>
-  </div>
-
-  {/* Copyright */}
-  <div className="h-1 max-w-full bg-gradient-to-r from-rose-200 via-[#fffff0] to-rose-200 opacity-30 mb-2 mt-6"></div>
-
-  <div className="border-t border-rose-700 text-center py-4 text-sm sm:text-base text-[#fffff0]">
-    © {new Date().getFullYear()} Luxe Aura. All rights reserved.
-  </div>
-</footer>
+       <Footer/>
 </WishlistProvider>
  </CartProvider>
  </AuthProvider>

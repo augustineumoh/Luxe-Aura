@@ -6,7 +6,6 @@ import { IoArrowBack, IoReceiptOutline } from "react-icons/io5";
 
 const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Crect fill='%23f8f9fa' width='150' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='14' text-anchor='middle' fill='%23dee2e6' dy='.3em'%3ENo Image%3C/text%3E%3C/svg%3E";
 
-
 const getAuthConfig = () => {
   const token = localStorage.getItem("token") || localStorage.getItem("access_token");
   return token ? { headers: { Authorization: `Bearer ${token}` } } : undefined;
@@ -41,11 +40,10 @@ const OrderDetail: React.FC = () => {
       try {
         const cfg = getAuthConfig();
         
-        // Try the most likely endpoints in order
+        // Try endpoints - baseURL already has /api
         const tryUrls = [
-          `/auth/purchase-history/${id}/`,
           `/orders/${id}/`,
-          `/api/orders/${id}/`,
+          `/auth/purchase-history/${id}/`,
         ];
         
         let res = null;

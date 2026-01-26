@@ -82,6 +82,26 @@ import diamondstud from "./diamondstud earing.jpg";
 import diamondpearl from "./wedding earring.jpg";
 import hoopearing from "./hoop earing.jpg";
 import thickhoopearing from "./thick hoop earing.jpg";
+import ruby from "./Ruby Radiance Ring.jpg";
+import oud11 from "./new product1.jpg";
+import emrald from "./Emerald Muse Earrings.jpg";
+import jasmine2 from "./Jasmine Veil Eau de Parfum.jpg";
+import oud1 from "./Oud Noir Parfum.jpg";
+import palazzo from "./Palazzo Nobile Blooming Ballet.jpg";
+import diamond1 from "./Diamond Whisper Bracelet.jpg";
+import halo from "./Golden Halo Necklace.jpg";
+import pearl1 from "./Pearl Grace Studs.jpg";
+import watch1 from "./watch1.jpg";
+import earing from "./earing.jpg";
+import chance from "./chance1.jpg";
+import jewel1 from "./jewel2.jpg";
+import jewel3 from "./jewel3.jpg";
+import chanel from "./chanel.jpg";
+import necklace from "./necklace.jpg";
+import watch4 from "./watch4.jpg";
+import missdior from "./miss dior.jpg";
+import ring1 from "./rings1.jpg";
+
 
 
 // Product Image Mapping
@@ -167,6 +187,26 @@ export const productImageMap: { [key: number]: string } = {
   79: hoopearing,
   80: thickhoopearing,
   81: pearlbracelet,
+  82: ruby,
+88: oud11,
+84: emrald,
+85: diamond1,
+86: halo,
+87: pearl1,
+83: jasmine2,
+89: oud1,
+90: palazzo,
+91: palazzo,
+92: watch1,
+93: earing,
+94: chance,
+95: jewel1,
+96: jewel3,
+97: chanel,
+98: necklace,
+99: watch4,
+100: missdior,
+101: ring1,
 };
 
 // TypeScript Interfaces

@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { TbCurrencyNaira } from 'react-icons/tb';
 import { IoTrashOutline } from 'react-icons/io5';
 import { BsBag } from 'react-icons/bs';
+import { FaArrowLeft } from "react-icons/fa";
 
 const Cart: React.FC = () => {
   const { cartItems, cartTotal, updateQuantity, removeFromCart, clearCart, loading } = useCart();
@@ -197,9 +198,9 @@ const Cart: React.FC = () => {
 
               <Link
                 to="/shop_all"
-                className="block text-center text-rose-600 hover:text-rose-700 font-semibold transition"
+                className=" text-center flex items-center text-rose-600 gap-2 hover:text-rose-700 font-semibold transition"
               >
-                ← Continue Shopping
+                <FaArrowLeft /> Continue Shopping
               </Link>
 
               {/* Trust Badges */}

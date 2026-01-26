@@ -1,18 +1,19 @@
-import React, { useMemo, useState } from "react";
-import ruby from "./Ruby Radiance Ring.jpg";
-import oud from "./new product1.jpg";
-import emrald from "./Emerald Muse Earrings.jpg";
-import jasmine from "./Jasmine Veil Eau de Parfum.jpg";
-import img from "./new product_hero.jpg";
+import React, { useMemo, useState, useEffect } from "react";
 import { TbCurrencyNaira } from "react-icons/tb";
-import oud1 from "./Oud Noir Parfum.jpg";
-import palazzo from "./Palazzo Nobile Blooming Ballet.jpg";
-import diamond from "./Diamond Whisper Bracelet.jpg";
-import halo from "./Golden Halo Necklace.jpg";
-import pearl from "./Pearl Grace Studs.jpg";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useCart } from "./cartContext";
 import { useWishlist } from "./wishlistContext";
+import api from "./api/axios";
+import ruby from "./Ruby Radiance Ring.jpg";
+import oud11 from "./new product1.jpg";
+import emrald from "./Emerald Muse Earrings.jpg";
+import jasmine2 from "./Jasmine Veil Eau de Parfum.jpg";
+import img from "./new product_hero.jpg";
+import oud1 from "./Oud Noir Parfum.jpg";
+import palazzo from "./Palazzo Nobile Blooming Ballet.jpg";
+import diamond1 from "./Diamond Whisper Bracelet.jpg";
+import halo from "./Golden Halo Necklace.jpg";
+import pearl1 from "./Pearl Grace Studs.jpg";
 
 /* -------------------------------
    Types
@@ -24,19 +25,18 @@ interface Product {
   name: string;
   category: Category;
   price: number;
-  image: string;
+  image?: string;
+  images?: Array<{ image: string } | string>;
   isNew: boolean;
   isLimited?: boolean;
   description?: string;
-  launchDate?: string; // ISO date
+  launchDate?: string;
 }
 
-/* -------------------------------
-   Sample data (replace with API)
--------------------------------- */
-const products: Product[] = [
+// Fallback products with local images
+const fallbackProducts: Product[] = [
   {
-    id: 1,
+    id: 82,
     name: "Ruby Radiance Ring",
     category: "Jewelry",
     price: 62000,
@@ -47,17 +47,17 @@ const products: Product[] = [
     launchDate: "2025-11-23",
   },
   {
-    id: 2,
+    id: 88,
     name: "Verset parfum - Sofia",
     category: "Perfume",
     price: 140000,
-    image: oud,
+    image: oud11,
     isNew: true,
     description: "Blackcurrant and May rose meet amber and musk — modern & charismatic.",
     launchDate: "2025-11-28",
   },
   {
-    id: 3,
+    id: 84,
     name: "Emerald Muse Earrings",
     category: "Jewelry",
     price: 28000,
@@ -67,17 +67,17 @@ const products: Product[] = [
     launchDate: "2025-11-12",
   },
   {
-    id: 8,
+    id: 85,
     name: "Diamond Whisper Bracelet",
     category: "Jewelry",
     price: 58000,
-    image: diamond,
+    image: diamond1,
     isNew: true,
     description: "Delicate diamonds on a gold chain, whispering elegance.",
     launchDate: "2025-11-29",
   },
   {
-    id: 9,
+    id: 86,
     name: "Golden Halo Necklace",
     category: "Jewelry",
     price: 60000,
@@ -87,27 +87,27 @@ const products: Product[] = [
     launchDate: "2025-11-27",
   },
   {
-    id: 10,
+    id: 87,
     name: "Pearl Grace Studs",
     category: "Jewelry",
     price: 63000,
-    image: pearl,
+    image: pearl1,
     isNew: true,
     description: "Classic freshwater pearls in a modern setting.",
     launchDate: "2025-11-25",
   },
   {
-    id: 4,
+    id: 83,
     name: "Jasmine Veil Eau de Parfum",
     category: "Perfume",
     price: 55000,
-    image: jasmine,
+    image: jasmine2,
     isNew: true,
     description: "Airy jasmine layered with soft vanilla.",
     launchDate: "2025-11-10",
   },
   {
-    id: 5,
+    id: 89,
     name: "Oud Noir Parfum",
     category: "Perfume",
     price: 50000,
@@ -117,7 +117,7 @@ const products: Product[] = [
     launchDate: "2025-11-20",
   },
   {
-    id: 6,
+    id: 90,
     name: "Palazzo Nobile Blooming Ballet",
     category: "Perfume",
     price: 52000,
@@ -127,7 +127,7 @@ const products: Product[] = [
     launchDate: "2025-11-12",
   },
   {
-    id: 7,
+    id: 91,
     name: "Chanel Chance Eau Tendre",
     category: "Perfume",
     price: 42000,
@@ -142,6 +142,29 @@ const products: Product[] = [
    Small helpers
 -------------------------------- */
 const formatPrice = (value: number) => value.toLocaleString(undefined, { maximumFractionDigits: 0 });
+
+// Helper to get image URL from product
+const getProductImageUrl = (product: Product): string => {
+  // If product has images array
+  if (product.images && product.images.length > 0) {
+    const firstImage = product.images[0];
+    if (typeof firstImage === 'string') return firstImage;
+    if (typeof firstImage === 'object' && firstImage.image) return firstImage.image;
+  }
+  
+  // If product has single image field
+  if (product.image) {
+    // Check if it's a URL or local import
+    if (typeof product.image === 'string' && product.image.startsWith('http')) {
+      return product.image;
+    }
+    // For local imports (like your current setup)
+    return product.image;
+  }
+  
+  // Fallback placeholder
+  return 'https://via.placeholder.com/400x400?text=No+Image';
+};
 
 /* -------------------------------
    ProductCard component
@@ -168,6 +191,7 @@ function ProductCard({
   messages,
 }: ProductCardProps) {
   const wishlisted = isWishlisted(product.id);
+  const imageUrl = getProductImageUrl(product);
 
   return (
     <article className="bg-white rounded-lg shadow-md hover:shadow-xl flex flex-col transition transform hover:-translate-y-2">
@@ -191,7 +215,11 @@ function ProductCard({
           )}
         </button>
 
-        <img src={product.image} alt={product.name} className="w-full h-64 object-cover rounded-t-lg" />
+        <img 
+          src={imageUrl} 
+          alt={product.name} 
+          className="w-full h-64 object-cover rounded-t-lg"
+        />
       </div>
 
       <div className="p-4 flex flex-col flex-grow">
@@ -230,16 +258,47 @@ function ProductCard({
    Page component
 -------------------------------- */
 const NewProductsPage: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>(fallbackProducts); // ✅ Start with fallback
+  const [loading, setLoading] = useState(false); // ✅ No loading initially
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [categoryFilter, setCategoryFilter] = useState<"All" | Category>("All");
   const [sortOption, setSortOption] = useState<"Newest" | "LowToHigh" | "HighToLow">("Newest");
+
+  // Try to fetch products from backend, fallback to local if it fails
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get("/products/");
+        
+        const data = response.data;
+        const productList = Array.isArray(data) ? data : data.results || data.products || [];
+        
+        // Filter only new products
+        const newProducts = productList.filter((p: Product) => p.isNew);
+        
+        // Only update if we got products from backend
+        if (newProducts.length > 0) {
+          setProducts(newProducts);
+        }
+        // Otherwise keep using fallbackProducts
+      } catch (error) {
+        console.error("Error fetching products from backend, using fallback:", error);
+        // Keep using fallbackProducts
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   // Featured product (newest by launchDate)
   const featuredProduct = useMemo<Product | undefined>(() => {
     return [...products]
       .filter((p) => p.isNew)
       .sort((a, b) => (b.launchDate ? Date.parse(b.launchDate) : 0) - (a.launchDate ? Date.parse(a.launchDate) : 0))[0];
-  }, []);
+  }, [products]);
 
   // Filter + search + sort
   const visibleProducts = useMemo<Product[]>(() => {
@@ -263,7 +322,7 @@ const NewProductsPage: React.FC = () => {
     }
 
     return list;
-  }, [searchTerm, categoryFilter, sortOption]);
+  }, [products, searchTerm, categoryFilter, sortOption]);
 
   // cart & wishlist
   const { addToCart, loading: cartLoading } = useCart();
@@ -313,148 +372,188 @@ const NewProductsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#FFFFF0] via-rose-200 to-[#FFFFF0]">
-     {/* Hero */}
+      {/* Hero */}
       <section
         className="relative bg-center bg-cover h-[100vh] flex items-center justify-center"
         style={{ backgroundImage: `url(${img})` }}
       >
         <div className="absolute inset-0"></div>
         <div className="absolute inset-0 bg-opacity-40 flex flex-col justify-end items-center px-6 pb-5 text-black z-10">
-    <div className="text-center max-w-xl text-rose-900" data-aos="fade-up">
-      <h1 className="text-4xl font-bold mb-4">Introducing Our Latest Aura</h1>
-      <p className="text-lg mb-8 font-bold">Crafted to inspire. Designed to shine. Explore our newest fragrances and jewelry.
-    </p>
-      <button className="ml-4 border uppercase font-bold border-rose-900 px-6 py-3 hover:bg-rose-900 hover:text-[#FFFFF0] rounded-2xl transition" data-aos="">Shop New Arrivals</button>
-    </div>
-  </div>
-      </section>
-
-      {/* Featured Product */}
-      {featuredProduct && (
-        <section className="py-16 px-6 md:px-12">
-          <div className="container mx-auto max-w-6xl grid md:grid-cols-2 gap-10 items-center">
-            <div className="relative">
-              {featuredProduct.isLimited && (
-                <span className="absolute top-4 left-4 bg-rose-600 text-white text-xs px-3 py-1 rounded-full shadow">Limited Edition</span>
-              )}
-
-              <button
-                type="button"
-                onClick={(e) => toggleWishlist(featuredProduct.id, e)}
-                disabled={wishlistLoading === featuredProduct.id}
-                aria-label="Toggle wishlist"
-                className="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-rose-50 z-10 disabled:opacity-50"
-              >
-                {wishlistLoading === featuredProduct.id ? (
-                  <div className="animate-spin h-6 w-6 border-2 border-rose-600 border-t-transparent rounded-full" />
-                ) : isInWishlist(featuredProduct.id) ? (
-                  <IoHeart className="text-rose-600" size={22} />
-                ) : (
-                  <IoHeartOutline className="text-gray-400" size={22} />
-                )}
-              </button>
-
-              <img src={featuredProduct.image} alt={featuredProduct.name} className="rounded-lg shadow-lg w-full h-[480px] object-cover" />
-            </div>
-
-            <div>
-              <h2 className="text-3xl md:text-4xl font-serif text-rose-900 font-bold">{featuredProduct.name}</h2>
-              <p className="mt-4 text-rose-800">{featuredProduct.description}</p>
-
-              <p className="mt-6 text-sm text-rose-900">{featuredProduct.category}</p>
-              <p className="mt-2 text-rose-700 text-3xl font-bold flex items-center">
-                <TbCurrencyNaira className="mr-1" />
-                {formatPrice(featuredProduct.price)}
-              </p>
-
-              <div className="mt-6 flex items-center gap-4">
-                <button
-                  type="button"
-                  onClick={() => handleAddToCart(featuredProduct.id)}
-                  disabled={addingToCart === featuredProduct.id || cartLoading}
-                  className={`px-6 py-3 rounded-lg font-semibold transition ${addingToCart === featuredProduct.id ? "bg-rose-400 text-white cursor-wait" : "bg-rose-600 text-white hover:bg-rose-700"} disabled:opacity-50`}
-                >
-                  {addingToCart === featuredProduct.id ? "Adding..." : "Add to Cart"}
-                </button>
-
-                <a href={`/product/${featuredProduct.id}`} className="inline-block text-rose-600 border border-rose-600 px-5 py-3 rounded-lg hover:bg-rose-50 transition">View Details</a>
-              </div>
-
-              {messages[featuredProduct.id] && (
-                <p className={`mt-4 text-sm ${messages[featuredProduct.id].includes("✓") ? "text-green-600" : "text-red-600"}`}>
-                  {messages[featuredProduct.id]}
-                </p>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Divider */}
-      <div className="w-24 h-1 bg-gradient-to-r from-rose-500 via-rose-200 to-rose-500 mx-auto my-4"></div>
-
-      {/* Controls */}
-      <section id="new-arrivals" className="py-10 px-6 md:px-12">
-        <div className="container mx-auto max-w-6xl">
-          <div className="flex flex-col md:flex-row items-center gap-4 mb-8">
-            <input
-              type="text"
-              placeholder="Search new products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full md:w-1/3 px-4 py-2 border border-rose-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500"
-            />
-
-            <select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value as "All" | Category)}
-              className="w-full md:w-1/4 px-4 py-2 border border-rose-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500"
-            >
-              <option value="All">All Categories</option>
-              <option value="Perfume">Perfume</option>
-              <option value="Jewelry">Jewelry</option>
-            </select>
-
-            <select
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value as "Newest" | "LowToHigh" | "HighToLow")}
-              className="w-full md:w-1/4 px-4 py-2 border border-rose-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500"
-            >
-              <option value="Newest">Newest</option>
-              <option value="LowToHigh">Price: Low to High</option>
-              <option value="HighToLow">Price: High to Low</option>
-            </select>
-          </div>
-
-          {/* Grid */}
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {visibleProducts.length > 0 ? (
-              visibleProducts.map((p) => (
-                <ProductCard
-                  key={p.id}
-                  product={p}
-                  onAddToCart={handleAddToCart}
-                  onToggleWishlist={toggleWishlist}
-                  isWishlisted={isInWishlist}
-                  addingToCart={addingToCart}
-                  cartLoading={Boolean(cartLoading)}
-                  wishlistLoading={wishlistLoading}
-                  messages={messages}
-                />
-              ))
-            ) : (
-              <p className="text-center text-gray-600 col-span-full">No products found.</p>
-            )}
+          <div className="text-center max-w-xl text-rose-900" data-aos="fade-up">
+            <h1 className="text-4xl font-bold mb-4">Introducing Our Latest Aura</h1>
+            <p className="text-lg mb-8 font-bold">
+              Crafted to inspire. Designed to shine. Explore our newest fragrances and jewelry.
+            </p>
+            <button className="ml-4 border uppercase font-bold border-rose-900 px-6 py-3 hover:bg-rose-900 hover:text-[#FFFFF0] rounded-2xl transition">
+              Shop New Arrivals
+            </button>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-12 text-center">
-        <h3 className="text-2xl md:text-3xl font-serif text-rose-900 font-bold">Explore the Aura of Newness</h3>
-        <p className="mt-2 text-rose-700">Limited drops. Refined designs. Be the first to wear them.</p>
-        <a href="/shop_all" className="mt-6 inline-block bg-white text-rose-700 px-6 py-3 rounded-lg font-semibold border border-rose-900 hover:bg-amber-50 transition">Shop Full Collection</a>
-      </section>
+      {/* Loading State (only shows briefly on initial backend fetch) */}
+      {loading && products.length === 0 ? (
+        <div className="flex items-center justify-center py-20">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-rose-600"></div>
+        </div>
+      ) : (
+        <>
+          {/* Featured Product */}
+          {featuredProduct && (
+            <section className="py-16 px-6 md:px-12">
+              <div className="container mx-auto max-w-6xl grid md:grid-cols-2 gap-10 items-center">
+                <div className="relative">
+                  {featuredProduct.isLimited && (
+                    <span className="absolute top-4 left-4 bg-rose-600 text-white text-xs px-3 py-1 rounded-full shadow">
+                      Limited Edition
+                    </span>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={(e) => toggleWishlist(featuredProduct.id, e)}
+                    disabled={wishlistLoading === featuredProduct.id}
+                    aria-label="Toggle wishlist"
+                    className="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:bg-rose-50 z-10 disabled:opacity-50"
+                  >
+                    {wishlistLoading === featuredProduct.id ? (
+                      <div className="animate-spin h-6 w-6 border-2 border-rose-600 border-t-transparent rounded-full" />
+                    ) : isInWishlist(featuredProduct.id) ? (
+                      <IoHeart className="text-rose-600" size={22} />
+                    ) : (
+                      <IoHeartOutline className="text-gray-400" size={22} />
+                    )}
+                  </button>
+
+                  <img 
+                    src={getProductImageUrl(featuredProduct)} 
+                    alt={featuredProduct.name} 
+                    className="rounded-lg shadow-lg w-full h-[480px] object-cover"
+                  />
+                </div>
+
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-serif text-rose-900 font-bold">
+                    {featuredProduct.name}
+                  </h2>
+                  <p className="mt-4 text-rose-800">{featuredProduct.description}</p>
+
+                  <p className="mt-6 text-sm text-rose-900">{featuredProduct.category}</p>
+                  <p className="mt-2 text-rose-700 text-3xl font-bold flex items-center">
+                    <TbCurrencyNaira className="mr-1" />
+                    {formatPrice(featuredProduct.price)}
+                  </p>
+
+                  <div className="mt-6 flex items-center gap-4">
+                    <button
+                      type="button"
+                      onClick={() => handleAddToCart(featuredProduct.id)}
+                      disabled={addingToCart === featuredProduct.id || cartLoading}
+                      className={`px-6 py-3 rounded-lg font-semibold transition ${
+                        addingToCart === featuredProduct.id
+                          ? "bg-rose-400 text-white cursor-wait"
+                          : "bg-rose-600 text-white hover:bg-rose-700"
+                      } disabled:opacity-50`}
+                    >
+                      {addingToCart === featuredProduct.id ? "Adding..." : "Add to Cart"}
+                    </button>
+
+                    <a
+                      href={`/product/${featuredProduct.id}`}
+                      className="inline-block text-rose-600 border border-rose-600 px-5 py-3 rounded-lg hover:bg-rose-50 transition"
+                    >
+                      View Details
+                    </a>
+                  </div>
+
+                  {messages[featuredProduct.id] && (
+                    <p
+                      className={`mt-4 text-sm ${
+                        messages[featuredProduct.id].includes("✓") ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      {messages[featuredProduct.id]}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Divider */}
+          <div className="w-24 h-1 bg-gradient-to-r from-rose-500 via-rose-200 to-rose-500 mx-auto my-4"></div>
+
+          {/* Controls */}
+          <section id="new-arrivals" className="py-10 px-6 md:px-12">
+            <div className="container mx-auto max-w-6xl">
+              <div className="flex flex-col md:flex-row items-center gap-4 mb-8">
+                <input
+                  type="text"
+                  placeholder="Search new products..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full md:w-1/3 px-4 py-2 border border-rose-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500"
+                />
+
+                <select
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value as "All" | Category)}
+                  className="w-full md:w-1/4 px-4 py-2 border border-rose-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500"
+                >
+                  <option value="All">All Categories</option>
+                  <option value="Perfume">Perfume</option>
+                  <option value="Jewelry">Jewelry</option>
+                </select>
+
+                <select
+                  value={sortOption}
+                  onChange={(e) => setSortOption(e.target.value as "Newest" | "LowToHigh" | "HighToLow")}
+                  className="w-full md:w-1/4 px-4 py-2 border border-rose-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500"
+                >
+                  <option value="Newest">Newest</option>
+                  <option value="LowToHigh">Price: Low to High</option>
+                  <option value="HighToLow">Price: High to Low</option>
+                </select>
+              </div>
+
+              {/* Grid */}
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                {visibleProducts.length > 0 ? (
+                  visibleProducts.map((p) => (
+                    <ProductCard
+                      key={p.id}
+                      product={p}
+                      onAddToCart={handleAddToCart}
+                      onToggleWishlist={toggleWishlist}
+                      isWishlisted={isInWishlist}
+                      addingToCart={addingToCart}
+                      cartLoading={Boolean(cartLoading)}
+                      wishlistLoading={wishlistLoading}
+                      messages={messages}
+                    />
+                  ))
+                ) : (
+                  <p className="text-center text-gray-600 col-span-full">No products found.</p>
+                )}
+              </div>
+            </div>
+          </section>
+
+          {/* CTA */}
+          <section className="py-12 text-center">
+            <h3 className="text-2xl md:text-3xl font-serif text-rose-900 font-bold">
+              Explore the Aura of Newness
+            </h3>
+            <p className="mt-2 text-rose-700">Limited drops. Refined designs. Be the first to wear them.</p>
+            <a
+              href="/shop_all"
+              className="mt-6 inline-block bg-white text-rose-700 px-6 py-3 rounded-lg font-semibold border border-rose-900 hover:bg-amber-50 transition"
+            >
+              Shop Full Collection
+            </a>
+          </section>
+        </>
+      )}
     </div>
   );
 };

@@ -47,16 +47,16 @@ import paris from "./paris.jpg";
 import tokyo from "./tokyo.jpg";
 
 const products = [
-  { id: 1, name: "Rose Gold Radiant Watch", price: "₦165,000.00", image: watch1, hoverImage: watch2 },
-  { id: 2, name: "Bold-Set Gold Earrings", price: "₦93,000.00", image: earing, hoverImage: earing1 },
-  { id: 3, name: "Chanel Chance Eau Tendre", price: "₦493,000.00", image: chance, hoverImage: chance2 },
-  { id: 4, name: "Diamond Women Set", price: "₦865,000.00", image: jewel1, hoverImage: jewel2 },
-  { id: 5, name: "Gold Braclet Set", price: "₦493,000.00", image: jewel3, hoverImage: jewel4 },
-  { id: 6, name: "Coco Chanel Eau de parfum", price: "₦265,000.00", image: chanel, hoverImage: chanel2 },
-  { id: 7, name: "Gold set necklace and rings", price: "₦193,000.00", image: necklace, hoverImage: necklace1 },
-  { id: 8, name: "Wrist Watch and Bracelet Set", price: "₦293,000.00", image: watch4, hoverImage: watch3 },
-  { id: 9, name: "Miss Dior Eau de parfum", price: "₦165,000.00", image: missdior, hoverImage: missdior1 },
-  { id: 10, name: " Gold Ring set", price: "₦865,000.00", image: ring1, hoverImage: ring },
+  { id: 92, name: "Rose Gold Radiant Watch", price: "₦165,000.00", image: watch1, hoverImage: watch2 },
+  { id: 93, name: "Bold-Set Gold Earrings", price: "₦93,000.00", image: earing, hoverImage: earing1 },
+  { id: 94, name: "Chanel Chance Eau Tendre", price: "₦493,000.00", image: chance, hoverImage: chance2 },
+  { id: 95, name: "Diamond Women Set", price: "₦865,000.00", image: jewel1, hoverImage: jewel2 },
+  { id: 96, name: "Gold Braclet Set", price: "₦493,000.00", image: jewel3, hoverImage: jewel4 },
+  { id: 97, name: "Coco Chanel Eau de parfum", price: "₦265,000.00", image: chanel, hoverImage: chanel2 },
+  { id: 98, name: "Gold set necklace and rings", price: "₦193,000.00", image: necklace, hoverImage: necklace1 },
+  { id: 99, name: "Wrist Watch and Bracelet Set", price: "₦293,000.00", image: watch4, hoverImage: watch3 },
+  { id: 100, name: "Miss Dior Eau de parfum", price: "₦165,000.00", image: missdior, hoverImage: missdior1 },
+  { id: 101, name: " Gold Ring set", price: "₦865,000.00", image: ring1, hoverImage: ring },
 ];
 
 function ProductSlider(): JSX.Element {

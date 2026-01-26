@@ -742,7 +742,7 @@ const ShopAllPage = () => {
   return (
     <div className="bg-gradient-to-r from-[#FFFFF0] via-rose-100 to-[#FFFFF0] min-h-screen">
       <section
-        className="relative bg-cover bg-center h-[100vh] flex items-center justify-center"
+        className="relative bg-cover bg-center h-[80vh] flex items-center justify-center"
         style={{ backgroundImage: `url(${img})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-rose-300/30 to-black/40 animate-pulse"></div>
